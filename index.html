@@ -6,72 +6,81 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document</title>
-  <link rel="stylesheet" href="styles.css" />
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&display=swap");
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
-body {
-  width: 400px;
-  max-width: 500px;
-  /* overflow-x: hidden; */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 10px;
-  background-color: #000000;
-  color: white;
-}
 
-.main {
-  width: 350px;
-  height: 520px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 25px;
-  padding: 10px;
-  border-radius: 5px;
-}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
 
-.btn {
-  background-color: #ffff00;
-  color: black;
-  padding: 20px;
-  border: none;
-  font-size: 16px;
-}
+    body {
+      width: 400px;
+      max-width: 500px;
+      /* overflow-x: hidden; */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px;
+      background-color: #000000;
+      color: white;
+    }
 
-.loading{
-  width: 300px;
-  height: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid gray;
-  gap: 10px;
-}
-.loader {
-  border: 6px solid #f3f3f3; /* Light grey */
-  border-top: 6px solid #545454; /* Blue */
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  animation: spin 1s linear infinite;
-}
+    .main {
+      width: 350px;
+      height: 520px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 25px;
+      padding: 10px;
+      border-radius: 5px;
+    }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
+    .btn {
+      background-color: #ffff00;
+      color: black;
+      padding: 20px;
+      border: none;
+      font-size: 16px;
+    }
+
+    .loading {
+      width: 300px;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid gray;
+      gap: 10px;
+    }
+
+    .loader {
+      border: 6px solid #f3f3f3;
+      /* Light grey */
+      border-top: 6px solid #545454;
+      /* Blue */
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
   </style>
 </head>
 
@@ -85,36 +94,8 @@ body {
     <img id="image" />
     <button onclick="download()" class="btn">Download now</button>
   </div>
-  <!-- <div class="input-div">
-      <div>
-        <div>
-          <label for="text">To</label>
-          <input type="text" name="to" id="to" />
-        </div>
-        <div>
-          <label for="">Message</label>
-          <textarea name="msg" id="msg" cols="30" rows="4"></textarea>
-        </div>
-        <div>
-          <label for="">From</label>
-          <input type="text" name="from" id="from" />
-        </div>
-      </div>
-      <button onclick="createGIF()">Create GIF</button>
-     
-    </div> -->
-  <!-- <script type="text/javascript" src="/LZWEncoder.js"></script>
-    <script type="text/javascript" src="/NeuQuant.js"></script>
-    <script type="text/javascript" src="/GIFEncoder.js"></script>
-    <script type="text/javascript" src="b64.js"></script>
-    <script src="main.js"></script> -->
 
   <script>
-
-
-
-
-
 
     //b64
     function encode64(r) { for (var t, c, a, h, e, A, o, n = "", d = 0, C = r.length, f = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="; d < C;)t = r.charCodeAt(d++), c = r.charCodeAt(d++), a = r.charCodeAt(d++), h = t >> 2, e = (3 & t) << 4 | c >> 4, A = (15 & c) << 2 | a >> 6, o = 63 & a, isNaN(c) ? A = o = 64 : isNaN(a) && (o = 64), n = n + f.charAt(h) + f.charAt(e) + f.charAt(A) + f.charAt(o); return n }
@@ -138,11 +119,10 @@ body {
     canvas.width = 300;
     canvas.height = 400;
     let context = canvas.getContext("2d");
-    let from = document.getElementById("from");
-    let to = document.getElementById("to");
-    let message = document.getElementById("msg");
     let encoder = new GIFEncoder();
-
+    let from;
+    let to;
+    let message;
     let paramString = window.location.href.split("?")[1];
     let queryString = new URLSearchParams(paramString);
     for (let pair of queryString.entries()) {
@@ -171,12 +151,11 @@ body {
     async function make_base(i) {
       //create new Image
       let base_image = new Image();
-     // base_image.src = `/frames/GIF_no_text_4mb_1-${i} (dragged).jpg`;
-      base_image.src=`https://uploads-ssl.webflow.com/63973973d862a90747f1f94f/63999311d142ead7d818a5ec_GIF_no_text_4mb_1-${i} 20(dragged).jpg`
+      base_image.src = `/frames/GIF_no_text_4mb_1-${i} (dragged).jpg`;
       base_image.style.width = "300px";
       base_image.style.height = "400px";
       base_image.style.objectFit = "cover";
-      await sleep(50); // wait for 50 milliseconds
+      await sleep(51); // wait for 50 milliseconds
 
       //Convert text in 3 lines
       let text2 = message;
@@ -201,11 +180,11 @@ body {
       context.clearRect(0, 0, canvas.width, canvas.height);
       context.drawImage(base_image, 0, 0, 300, 400);
 
-      //from text
-      context.font = "100 18pt Poppins";
+      //to text
+      context.font = "100 16pt Poppins";
       context.fontWeight = "400";
       context.fillStyle = "rgb(255,255,255)";
-      context.fillText(`To: ${to}`, 30, 90);
+      context.fillText(`To: ${to.slice(0,18)}`, 30, 90);
 
       //message
       context.font = "24pt Poppins";
@@ -215,9 +194,12 @@ body {
         context.fillText(`${messageArr[i]} `, 30, lineHeight);
       }
 
-      //to text
-      context.font = "18pt Poppins";
-      context.fillText(`From: ${from}`, 130, 320);
+      //from text
+      let line1 = from.slice(0, 10)
+      let line2 = from.slice(10, 20)
+      context.font = "16pt Poppins";
+      context.fillText(`From: ${line1}`, 85, 320);
+      context.fillText(`${line2}`, 150, 355);
 
       // };
     }
@@ -226,7 +208,6 @@ body {
       encoder.setRepeat(0); //0  -> loop forever //1+ -> loop n times then stop
       encoder.setDelay(100); //go to next frame every 100 milliseconds
       encoder.setSize(300, 400); //set the size of frame
-      encoder.setQuality(19);
       encoder.start();
       for (let i = 1; i <= 72; i++) {
         await make_base(i);

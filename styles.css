@@ -1,0 +1,95 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  width: 100vw;
+  max-width: 100vw;
+  /* overflow-x: hidden; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+  background-color: #000000;
+  color: white;
+}
+
+.main {
+  width: 350px;
+  height: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 25px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.btn {
+  background-color: #ffff00;
+  color: black;
+  padding: 20px;
+  border: none;
+  font-size: 16px;
+}
+
+.loading{
+  width: 300px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid gray;
+  gap: 10px;
+}
+.loader {
+  border: 6px solid #f3f3f3; /* Light grey */
+  border-top: 6px solid #545454; /* Blue */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.input-div {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.input-div > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px;
+}
+.input-div > div > div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+}
+canvas {
+  visibility: hidden;
+  position: absolute;
+}
+input {
+  width: 300px;
+  padding: 3px;
+  outline: none;
+}
+.invisible-img {
+  width: 300px;
+  height: 350px;
+}

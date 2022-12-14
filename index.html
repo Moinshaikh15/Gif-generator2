@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  width: 400px;
+  max-width: 500px;
+  /* overflow-x: hidden; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+  background-color: #000000;
+  color: white;
+}
+
+.main {
+  width: 350px;
+  height: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 25px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.btn {
+  background-color: #ffff00;
+  color: black;
+  padding: 20px;
+  border: none;
+  font-size: 16px;
+}
+
+.loading{
+  width: 300px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid gray;
+  gap: 10px;
+}
+.loader {
+  border: 6px solid #f3f3f3; /* Light grey */
+  border-top: 6px solid #545454; /* Blue */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+  </style>
+</head>
+
+<body>
+  <div class="main">
+    <div class="loading">
+      <p>Creating Your GIF</p>
+      <div class="loader"></div>
+    </div>
+
+    <img id="image" />
+    <button onclick="download()" class="btn">Download now</button>
+  </div>
+  <!-- <div class="input-div">
+      <div>
+        <div>
+          <label for="text">To</label>
+          <input type="text" name="to" id="to" />
+        </div>
+        <div>
+          <label for="">Message</label>
+          <textarea name="msg" id="msg" cols="30" rows="4"></textarea>
+        </div>
+        <div>
+          <label for="">From</label>
+          <input type="text" name="from" id="from" />
+        </div>
+      </div>
+      <button onclick="createGIF()">Create GIF</button>
+     
+    </div> -->
+  <!-- <script type="text/javascript" src="/LZWEncoder.js"></script>
+    <script type="text/javascript" src="/NeuQuant.js"></script>
+    <script type="text/javascript" src="/GIFEncoder.js"></script>
+    <script type="text/javascript" src="b64.js"></script>
+    <script src="main.js"></script> -->
+
+  <script>
+
+
+
+
+
+
+    //b64
+    function encode64(r) { for (var t, c, a, h, e, A, o, n = "", d = 0, C = r.length, f = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="; d < C;)t = r.charCodeAt(d++), c = r.charCodeAt(d++), a = r.charCodeAt(d++), h = t >> 2, e = (3 & t) << 4 | c >> 4, A = (15 & c) << 2 | a >> 6, o = 63 & a, isNaN(c) ? A = o = 64 : isNaN(a) && (o = 64), n = n + f.charAt(h) + f.charAt(e) + f.charAt(A) + f.charAt(o); return n }
+    //b64
+
+    //LZWEncoder
+    LZWEncoder = function () { var $, n, F, f, t, i, o, r, x, _, e, c, u = {}, a = [], w = [], y = 0, s = !1, v = 0, B = 0, d = [0, 1, 3, 7, 15, 31, 63, 127, 255, 511, 1023, 2047, 4095, 8191, 16383, 32767, 65535], p = [], h = u.LZWEncoder = function t(i, o, r, x) { $ = i, n = o, F = r, f = Math.max(2, x) }, l = function $(n, F) { p[c++] = n, c >= 254 && W(F) }, m = function $(n) { E(5003), y = _ + 2, s = !0, g(_, n) }, E = function $(n) { for (var F = 0; F < n; ++F)a[F] = -1 }, L = u.compress = function $(n, F) { var f, t, i, u, v, B, d; for (f = 5003, s = !1, o = x = n, r = Z(o), e = (_ = 1 << n - 1) + 1, y = _ + 2, c = 0, u = b(), d = 0; f < 65536; f *= 2)++d; d = 8 - d, E(B = 5003), g(_, F); outer_loop: for (; -1 != (i = b());) { if (f = (i << 12) + u, a[t = i << d ^ u] == f) { u = w[t]; continue } if (a[t] >= 0) { v = B - t, 0 === t && (v = 1); do if ((t -= v) < 0 && (t += B), a[t] == f) { u = w[t]; continue outer_loop } while (a[t] >= 0) } g(u, F), u = i, y < 4096 ? (w[t] = y++, a[t] = f) : m(F) } g(u, F), g(e, F) }; u.encode = function F(o) { o.writeByte(f), t = $ * n, i = 0, L(f + 1, o), o.writeByte(0) }; var W = function $(n) { c > 0 && (n.writeByte(c), n.writeBytes(p, 0, c), c = 0) }, Z = function $(n) { return (1 << n) - 1 }, b = function $() { return 0 === t ? -1 : (--t, 255 & F[i++]) }, g = function $(n, F) { for (v &= d[B], B > 0 ? v |= n << B : v = n, B += o; B >= 8;)l(255 & v, F), v >>= 8, B -= 8; if ((y > r || s) && (s ? (r = Z(o = x), s = !1) : r = 12 == ++o ? 4096 : Z(o)), n == e) { for (; B > 0;)l(255 & v, F), v >>= 8, B -= 8; W(F) } }; return h.apply(this, arguments), u };
+    //LZWEncoder
+
+    //NeuQuant
+    NeuQuant = function () { var $, _, r, f, n, o = {}, t = 64, a = 65536, u = [], c = [], i = [], v = [], e = o.NeuQuant = function $(o, t, a) { var u, v; for (u = 0, _ = o, r = t, f = a, n = Array(256); u < 256; u++)n[u] = [, , , ,], (v = n[u])[0] = v[1] = v[2] = (u << 12) / 256, i[u] = 256, c[u] = 0 }, p = function $() { for (var _ = [], r = Array(256), f = 0; f < 256; f++)r[n[f][3]] = f; for (var o = 0, t = 0; t < 256; t++) { var a = r[t]; _[o++] = n[a][0], _[o++] = n[a][1], _[o++] = n[a][2] } return _ }, h = function $() { var _, r, f, o, t, a, c, i; for (_ = 0, c = 0, i = 0; _ < 256; _++) { for (t = n[_], f = _, o = t[1], r = _ + 1; r < 256; r++)(a = n[r])[1] < o && (f = r, o = a[1]); if (a = n[f], _ != f && (r = a[0], a[0] = t[0], t[0] = r, r = a[1], a[1] = t[1], t[1] = r, r = a[2], a[2] = t[2], t[2] = r, r = a[3], a[3] = t[3], t[3] = r), o != c) { for (u[c] = i + _ >> 1, r = c + 1; r < o; r++)u[r] = _; c = o, i = _ } } for (u[c] = i + 255 >> 1, r = c + 1; r < 256; r++)u[r] = 255 }, s = function n() { var o, t, a, u, c, i, e, p, h, s, x, N, Q, b; for (r < 1509 && (f = 1), $ = 30 + (f - 1) / 3, N = _, Q = 0, b = r, s = (x = r / (3 * f)) / 100 | 0, p = 1024, (e = (i = 2048) >> 6) <= 1 && (e = 0), o = 0; o < e; o++)v[o] = p * ((e * e - o * o) * 256 / (e * e)); for (h = r < 1509 ? 3 : r % 499 != 0 ? 1497 : r % 491 != 0 ? 1473 : r % 487 != 0 ? 1461 : 1509, o = 0; o < x;)if (a = (255 & N[Q + 0]) << 4, t = m(a, u = (255 & N[Q + 1]) << 4, c = (255 & N[Q + 2]) << 4), l(p, t, a, u, c), 0 !== e && y(e, t, a, u, c), (Q += h) >= b && (Q -= r), 0 === s && (s = 1), ++o % s == 0) for (p -= p / $, i -= i / 30, e = i >> 6, e <= 1 && (e = 0), t = 0; t < e; t++)v[t] = p * ((e * e - t * t) * 256 / (e * e)) }; o.map = function $(_, r, f) { var o, t, a, c, i, v, e; for (i = 1e3, e = -1, t = (o = u[r]) - 1; o < 256 || t >= 0;)o < 256 && ((a = (v = n[o])[1] - r) >= i ? o = 256 : (o++, a < 0 && (a = -a), (c = v[0] - _) < 0 && (c = -c), (a += c) < i && ((c = v[2] - f) < 0 && (c = -c), (a += c) < i && (i = a, e = v[3])))), t >= 0 && ((a = r - (v = n[t])[1]) >= i ? t = -1 : (t--, a < 0 && (a = -a), (c = v[0] - _) < 0 && (c = -c), (a += c) < i && ((c = v[2] - f) < 0 && (c = -c), (a += c) < i && (i = a, e = v[3])))); return e }, o.process = function $() { return s(), x(), h(), p() }; var x = function $() { var _; for (_ = 0; _ < 256; _++)n[_][0] >>= 4, n[_][1] >>= 4, n[_][2] >>= 4, n[_][3] = _ }, y = function $(_, r, f, o, t) { var a, u, c, i, e, p, h; for ((c = r - _) < -1 && (c = -1), (i = r + _) > 256 && (i = 256), a = r + 1, u = r - 1, p = 1; a < i || u > c;) { if (e = v[p++], a < i) { h = n[a++]; try { h[0] -= e * (h[0] - f) / 262144, h[1] -= e * (h[1] - o) / 262144, h[2] -= e * (h[2] - t) / 262144 } catch (s) { } } if (u > c) { h = n[u--]; try { h[0] -= e * (h[0] - f) / 262144, h[1] -= e * (h[1] - o) / 262144, h[2] -= e * (h[2] - t) / 262144 } catch (x) { } } } }, l = function $(_, r, f, o, t) { var a = n[r]; a[0] -= _ * (a[0] - f) / 1024, a[1] -= _ * (a[1] - o) / 1024, a[2] -= _ * (a[2] - t) / 1024 }, m = function $(_, r, f) { var o, u, v, e, p, h, s, x, y, l; for (o = 0, y = x = 2147483647, s = h = -1; o < 256; o++)(u = (l = n[o])[0] - _) < 0 && (u = -u), (v = l[1] - r) < 0 && (v = -v), u += v, (v = l[2] - f) < 0 && (v = -v), (u += v) < x && (x = u, h = o), (e = u - (c[o] >> 12)) < y && (y = e, s = o), p = i[o] >> 10, i[o] -= p, c[o] += p << 10; return i[h] += t, c[h] -= a, s }; return e.apply(this, arguments), o };
+    //NeuQuant
+
+    //GIFEncoder
+    GIFEncoder = function () { for (var t, e, n, r, i, a, o, $, f, c = 0, u = {}; c < 256; c++)u[c] = String.fromCharCode(c); function l() { this.bin = [] } l.prototype.getData = function () { for (var t = "", e = this.bin.length, n = 0; n < e; n++)t += u[this.bin[n]]; return t }, l.prototype.writeByte = function (t) { this.bin.push(t) }, l.prototype.writeUTFBytes = function (t) { for (var e = t.length, n = 0; n < e; n++)this.writeByte(t.charCodeAt(n)) }, l.prototype.writeBytes = function (t, e, n) { for (var r = n || t.length, i = e || 0; i < r; i++)this.writeByte(t[i]) }; var s = {}, w = null, y = -1, h = 0, _ = !1, B = [], d = 7, g = -1, v = !1, m = !0, x = !1, p = 10, F = "Generated by jsgif (https://github.com/antimatter15/jsgif/)"; s.setDelay = function t(e) { h = Math.round(e / 10) }, s.setDispose = function t(e) { e >= 0 && (g = e) }, s.setRepeat = function t(e) { e >= 0 && (y = e) }, s.setTransparent = function t(e) { w = e }, s.setComment = function t(e) { F = e }, s.addFrame = function n(a, o) { if (null === a || !_ || null === r) throw Error("Please call start method before calling addFrame"); var $ = !0; try { o ? a instanceof ImageData ? (i = a.data, sizeset && t == a.width && e == a.height || P(a.width, a.height)) : a instanceof Uint8ClampedArray ? a.length == t * e * 4 ? i = a : (console.log("Please set the correct size: ImageData length mismatch"), $ = !1) : (console.log("Please provide correct input"), $ = !1) : (i = a.getImageData(0, 0, a.canvas.width, a.canvas.height).data, x || P(a.canvas.width, a.canvas.height)), D(), T(), m && (I(), z(), y >= 0 && R()), U(), "" !== F && j(), E(), m || z(), G(), m = !1 } catch (f) { $ = !1 } return $ }, s.download = function t(e) { if (null === r || !1 == v) console.log("Please call start method and add frames and call finish method before calling download"); else { e = void 0 !== e ? e.endsWith(".gif") ? e : e + ".gif" : "download.gif"; var n = document.createElement("a"); n.download = e, n.href = URL.createObjectURL(new Blob([new Uint8Array(r.bin)], { type: "image/gif" })), n.click() } }, s.finish = function t() { if (!_) return !1; var e = !0; _ = !1; try { r.writeByte(59), v = !0 } catch (n) { e = !1 } return e }; var b = function t() { n = 0, i = null, a = null, o = null, f = null, v = !1, m = !0 }; s.setFrameRate = function t(e) { 15 != e && (h = Math.round(100 / e)) }, s.setQuality = function t(e) { e < 1 && (e = 1), p = e }; var P = s.setSize = function n(r, i) { (!_ || m) && ((t = r) < 1 && (t = 320), (e = i) < 1 && (e = 240), x = !0) }; s.start = function t() { b(); var e = !0; v = !1, r = new l; try { r.writeUTFBytes("GIF89a") } catch (n) { e = !1 } return _ = e }, s.cont = function t() { return b(), v = !1, r = new l, _ = !0 }; var T = function t() { var e = a.length, r = e / 3; o = []; var i = new NeuQuant(a, e, p); f = i.process(); for (var c = 0, u = 0; u < r; u++) { var l = i.map(255 & a[c++], 255 & a[c++], 255 & a[c++]); B[l] = !0, o[u] = l } a = null, $ = 8, d = 7, null !== w && (n = C(w)) }, C = function t(e) { if (null === f) return -1; for (var n = (16711680 & e) >> 16, r = (65280 & e) >> 8, i = 255 & e, a = 0, o = 16777216, $ = f.length, c = 0; c < $;) { var u = n - (255 & f[c++]), l = r - (255 & f[c++]), s = i - (255 & f[c]), w = u * u + l * l + s * s, y = c / 3; B[y] && w < o && (o = w, a = y), c++ } return a }, D = function n() { var r = t, o = e; a = []; for (var $ = i, f = 0, c = 0; c < o; c++)for (var u = 0; u < r; u++) { var l = c * r * 4 + 4 * u; a[f++] = $[l], a[f++] = $[l + 1], a[f++] = $[l + 2] } }, U = function t() { var e, i; r.writeByte(33), r.writeByte(249), r.writeByte(4), null === w ? (e = 0, i = 0) : (e = 1, i = 2), g >= 0 && (i = 7 & g), i <<= 2, r.writeByte(0 | i | 0 | e), A(h), r.writeByte(n), r.writeByte(0) }, j = function t() { r.writeByte(33), r.writeByte(254), r.writeByte(F.length), r.writeUTFBytes(F), r.writeByte(0) }, E = function n() { r.writeByte(44), A(0), A(0), A(t), A(e), m ? r.writeByte(0) : r.writeByte(128 | d) }, I = function n() { A(t), A(e), r.writeByte(240 | d), r.writeByte(0), r.writeByte(0) }, R = function t() { r.writeByte(33), r.writeByte(255), r.writeByte(11), r.writeUTFBytes("NETSCAPE2.0"), r.writeByte(3), r.writeByte(1), A(y), r.writeByte(0) }, z = function t() { r.writeBytes(f); for (var e = 768 - f.length, n = 0; n < e; n++)r.writeByte(0) }, A = function t(e) { r.writeByte(255 & e), r.writeByte(e >> 8 & 255) }, G = function n() { new LZWEncoder(t, e, o, $).encode(r) }; return s.stream = function t() { return r }, s.setProperties = function t(e, n) { _ = e, m = n }, s };
+    //GIFEncoder
+
+    let loading = document.querySelector(".loading")
+    let canvas = document.createElement("canvas");
+    canvas.classList.add("bitmap");
+    canvas.width = 300;
+    canvas.height = 400;
+    let context = canvas.getContext("2d");
+    let from = document.getElementById("from");
+    let to = document.getElementById("to");
+    let message = document.getElementById("msg");
+    let encoder = new GIFEncoder();
+
+    let paramString = window.location.href.split("?")[1];
+    let queryString = new URLSearchParams(paramString);
+    for (let pair of queryString.entries()) {
+      if (pair[0] === "to") {
+        to = pair[1];
+      }
+      if (pair[0] === "message") {
+        message = pair[1];
+      }
+      if (pair[0] === "from") {
+        from = pair[1];
+      }
+    }
+
+    context.fillStyle = "rgb(255,255,255)";
+    context.fillRect(0, 0, canvas.width, canvas.height); //GIF can't do transparent so do white
+
+    let sleep = (time) => {
+      return new Promise((resolve, rej) => {
+        setTimeout(() => {
+          resolve();
+        }, time);
+      });
+    };
+
+    async function make_base(i) {
+      //create new Image
+      let base_image = new Image();
+     // base_image.src = `/frames/GIF_no_text_4mb_1-${i} (dragged).jpg`;
+      base_image.src=`https://uploads-ssl.webflow.com/63973973d862a90747f1f94f/63999311d142ead7d818a5ec_GIF_no_text_4mb_1-${i} 20(dragged).jpg`
+      base_image.style.width = "300px";
+      base_image.style.height = "400px";
+      base_image.style.objectFit = "cover";
+      await sleep(50); // wait for 50 milliseconds
+
+      //Convert text in 3 lines
+      let text2 = message;
+      let textArr = text2.split(" ");
+      let messageArr = ["", "", ""];
+      let lineLength = 14;
+      let j = 0;
+      for (let i = 0; i < textArr.length; i++) {
+        if (j <= 2) {
+          if (
+            `${messageArr[j]} ${textArr[i]}`.length > lineLength ||
+            messageArr[j].length > lineLength
+          ) {
+            j++;
+          }
+          if (`${messageArr[j]} ${textArr[i]}`.length <= lineLength)
+            messageArr[j] += textArr[i] + " ";
+        }
+      }
+
+      // base_image.onload = function () {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.drawImage(base_image, 0, 0, 300, 400);
+
+      //from text
+      context.font = "100 18pt Poppins";
+      context.fontWeight = "400";
+      context.fillStyle = "rgb(255,255,255)";
+      context.fillText(`To: ${to}`, 30, 90);
+
+      //message
+      context.font = "24pt Poppins";
+      let lineHeight = 140;
+      for (let i = 0; i < messageArr.length; i++) {
+        lineHeight += 35;
+        context.fillText(`${messageArr[i]} `, 30, lineHeight);
+      }
+
+      //to text
+      context.font = "18pt Poppins";
+      context.fillText(`From: ${from}`, 130, 320);
+
+      // };
+    }
+
+    async function createGIF() {
+      encoder.setRepeat(0); //0  -> loop forever //1+ -> loop n times then stop
+      encoder.setDelay(100); //go to next frame every 100 milliseconds
+      encoder.setSize(300, 400); //set the size of frame
+      encoder.setQuality(19);
+      encoder.start();
+      for (let i = 1; i <= 72; i++) {
+        await make_base(i);
+        encoder.addFrame(context);
+      }
+      encoder.finish();
+      var binary_gif = encoder.stream().getData(); //notice this is different from the as3gif package!
+      var data_url = "data:image/gif;base64," + encode64(binary_gif);
+      loading.style.display = "none"
+      document.getElementById("image").src =
+        "data:image/gif;base64," + encode64(encoder.stream().getData());
+      // encoder.download("download.gif");
+    }
+    setTimeout(() => {
+      createGIF();
+    }, 100);
+
+
+    let download = () => {
+      encoder.download("christmasCard.gif");
+    };
+
+
+
+  </script>
+</body>
+
+</html>
